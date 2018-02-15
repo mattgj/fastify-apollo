@@ -1,15 +1,16 @@
 const apolloGraphqlFastify = require('./graphql')
 const apolloGraphiqlFastify = require('./graphiql')
+const fastifyPlugin = require('fastify-plugin')
 
 // Avoid `fastify-plugin` overriding prefix
 const fp = plugin =>
-  require('fastify-plugin')(function (fastify, opts, next) {
+  fastifyPlugin(function (fastify, opts, next) {
     fastify.register(plugin, opts, err => {
       next(err)
     })
 
     next()
-  }, '^0.30')
+  }, '^1.0.0')
 
 function plugin (fastify, { graphql, graphiql, printSchema }, next) {
   fastify

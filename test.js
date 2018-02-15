@@ -180,11 +180,11 @@ test('GET /schema', t => {
 })
 
 test('prefix', t => {
-  t.plan(3)
+  t.plan(2)
 
   const server = fastify()
 
-  server.register(require('./index'), Object.assign({}, {
+  server.register(require('./index'), Object.assign({}, opts, {
     prefix: '/api',
     printSchema: true
   }))
@@ -192,10 +192,8 @@ test('prefix', t => {
   server.ready(function (err) {
     t.error(err)
 
-    for (let route of server) {
-      const path = Object.keys(route)[0]
-      t.match(path, /^\/api/)
-    }
+    const routes = server.printRoutes()
+    t.match(routes, /\sapi\s/m)
 
     server.close()
   })
