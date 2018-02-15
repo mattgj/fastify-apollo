@@ -1,3 +1,4 @@
+const graphql = require('graphql')
 const runHttpQuery = require('apollo-server-core').runHttpQuery
 const graphqlSchema = require('./schemas').graphql
 const printSchema = require('./schemas').printSchema
@@ -56,7 +57,7 @@ module.exports = function (fastify, opts, next) {
       reply
         .type('text/plain')
         .code(200)
-        .send(require('graphql').printSchema(opts.schema))
+        .send(graphql.printSchema(opts.schema))
     })
   }
 
